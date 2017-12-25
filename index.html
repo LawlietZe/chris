@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SAFS圣诞抽奖大活动</title>
+    <link type="text/css" rel="stylesheet" href="css/weather.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="js/snow.js"></script>
+    <style type="text/css">
+        body{
+            position: relative;
+        }
+        .prizePanel{
+            width: 600px;
+            height: 400px;
+            border-radius: 5px;
+            border: 1px solid #76C0E7;
+            background: #76C0E7;
+            position: absolute;
+            top:  40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 4px 4px 9px #76C0DF;
+            background-color:rgba(118,192,223,0.5);
+        }
+        .prizePanel{
+            z-index: 99
+        }
+        .child{
+            position: absolute;
+            z-index: 9999
+        }
+        .numberNN{
+            font-size: 90px;
+            color: #fff;
+            opacity: 1;
+            text-align: center;
+        }
+        .title{
+            width: 600px;
+            display: block;
+            text-align: center;
+            color: #fff;
+        }
+        .panelBtn{
+            width: 600px;
+            display: block;
+            text-align: center;
+        }
+        .selectedNum{
+            width: 600px;
+            display: block;
+            text-align: center;        
+        }
+        .button{
+            cursor: pointer;
+        }
+        .selectedNum{
+            font-size: 20px !important;
+            color: #fff;
+        }
+        .listcontainer{
+            max-height: 122px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="leafContainer">
+    </div>
+<!--     <div class="hb-box">
+        <div class="hb_bg1">
+            <div class="namelist"></div>
+            <img src="imgaes/qianbao1.png" alt="">
+        </div>
+        <div class="name-box">
+            <ul class="name-ul">
+                <li><span id="nameId"></span></li>
+                <li><span id="nameId2"></span></li>
+            </ul>
+        </div>
+        <div class="hb_bg2"><img src="imgaes/qianbao2.png" alt=""></div>
+        <div class="hb_bg3"><img src="imgaes/qianbao3.png" alt=""></div>
+    </div> -->
+    <div class="lottery-img"><img src="imgaes/sandengjiang.png" alt=""></div>
+<!--     <div class="car-monkey">
+        <div class="monkey"><img src="imgaes/hou.png" alt=""></div>
+        <div class="car">
+            <img src="imgaes/che.png" alt="">
+        </div>
+    </div> -->
+    
+    <!---底部-->
+    <div class="bottom-fex " style=""></div>
+    <div class="prizePanel">
+        <div class="child">
+            <h1 class="title">【SAFS】2017年度圣诞抽奖</h1>
+            <div class="panelBtn">
+                <div class="start button pink brackets">抽奖</div>
+                <div class="end button blue brackets">停止</div>   
+            </div>
+            <div class="numberNN"></div> 
+            <div class="selectedNum">
+                <div>已抽中的奖品：</div>
+                <div class="listcontainer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    };
+    var number = [];
+    var selectedNum = [];
+    for(var i = 1 ; i <= 138; i++){
+        number.push(i);
+    }
+    //remove selected
+    number.remove(50);
+    number.remove(51);
+    number.remove(55);
+    number.remove(58);
+    number.remove(60);
+    number.remove(63);
+    number.remove(6);
+    number.remove(7);
+    number.remove(21);
+    number.remove(23);
+    number.remove(25);
+    number.remove(29);
+    number.remove(34);
+    number.remove(39);
+    number.remove(41);
+    number.remove(133);
+    number.remove(134);
+    number.remove(136);
+    number.remove(126);
+    number.remove(127);
+    number.remove(131);
+    number.remove(132);
+    number.remove(95);
+    number.remove(71);
+    number.remove(73);
+    number.remove(75);
+    number.remove(79);
+    number.remove(80);
+    number.remove(84);
+    number.remove(86);
+    number.remove(88);
+    var flag = false;
+    var timer;
+    $(".start").on("click",function(){
+        flag = true;
+        clearInterval(timer);
+        timer = setInterval(function(){
+            $(".numberNN").html(number[Math.floor(Math.random()*number.length)]);
+        },50);
+    });
+    $(".end").on("click",function(){
+        if (flag) {
+            clearInterval(timer);
+            number.remove(parseInt($(".numberNN").html()));
+            $(".listcontainer").append('<span>'+ $(".numberNN").html() + '，</span>')
+            $('.listcontainer').scrollTop( $('.listcontainer')[0].scrollHeight );
+            if (number.length == 0) {
+                alert("奖品分配完毕！活动结束~谢谢参与")
+            }            
+        }
+        flag = false;
+    });
+
+</script>
+</html>

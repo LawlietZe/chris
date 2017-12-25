@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script language="javascript" type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+<style type="text/css">
+.cur{color:red;font-weight:700;font-size:30px;}
+</style>
+</head>
+
+<body>
+<script type="text/javascript">
+var caution = false
+function setCookie(name, value, expires, path, domain, secure) {
+var curCookie = name + "=" + escape(value) +
+((expires) ? "; expires=" + expires.toGMTString() : "") +
+((path) ? "; path=" + path : "") +
+((domain) ? "; domain=" + domain : "") +
+((secure) ? "; secure" : "")
+if (!caution || (name + "=" + escape(value)).length <= 4000)
+document.cookie = curCookie
+else
+if (confirm("Cookie exceeds 4KB and will be cut!"))
+document.cookie = curCookie
+}
+function getCookie(name) {
+var prefix = name + "="
+var cookieStartIndex = document.cookie.indexOf(prefix)
+if (cookieStartIndex == -1)
+return null
+var cookieEndIndex = document.cookie.indexOf(";", cookieStartIndex + prefix.length)
+if (cookieEndIndex == -1)
+cookieEndIndex = document.cookie.length
+return unescape(document.cookie.substring(cookieStartIndex + prefix.length, cookieEndIndex))
+}
+function deleteCookie(name, path, domain) {
+if (getCookie(name)) {
+document.cookie = name + "=" +
+((path) ? "; path=" + path : "") +
+((domain) ? "; domain=" + domain : "") +
+"; expires=Thu, 01-Jan-70 00:00:01 GMT"
+}
+}
+function fixDate(date) {
+var base = new Date(0)
+var skew = base.getTime()
+if (skew > 0)
+date.setTime(date.getTime() - skew)
+}
+var now = new Date()
+fixDate(now)
+now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000)
+var visits = getCookie("counter")
+if (!visits)
+visits = 0
+else
+visits = parseInt(visits) + 1
+setCookie("counter", visits, now)
+document.write("你已经刷新了" + visits +"次")
+</script>
+<hr />
+<canvas id="w" width="800px" height="800px"></canvas>
+<script language="javascript" type="text/javascript">
+$(function(){
+	var p=$("#w")[0];
+	if(p.getContext){
+		var pp=p.getContext("2d");
+		pp.beginPath();
+		pp.arc(500,300,200,0,Math.PI*2,true);
+		pp.moveTo(500,300);
+		pp.lineTo(700,300);
+		pp.moveTo(500,300);
+		pp.lineTo(600,127);
+		pp.moveTo(500,300);
+		pp.lineTo(400,127);
+		pp.moveTo(500,300);
+		pp.lineTo(300,300);
+		pp.moveTo(500,300);
+		pp.lineTo(400,473);
+		pp.moveTo(500,300);
+		pp.lineTo(600,473);
+		pp.stroke();
+	};
+	
+})
+</script>
+<span onclick="getAward();" style="position:absolute; left:460px;top:90px; border: #F00 solid 1px; background-color: #F00; cursor:pointer">开始</span>
+<span style="position:absolute; left:500px;top:90px;" >/</span>
+<span onclick="stopAward();" style="position:absolute; left:510px;top:90px; border:#F00 solid 1px; background-color:#F00; cursor:pointer">停止</span>
+<span id="a1" style=" position:absolute; left:600px; top:270px">1</span><br/>  
+<span id="a2" style=" position:absolute; left:500px; top:220px">2</span><br/>  
+<span id="a3" style=" position:absolute; left:400px; top:270px">3(8)</span><br/>  
+<span id="a4" style=" position:absolute; left:400px; top:390px">4(9)</span><br/>  
+<span id="a5" style=" position:absolute; left:500px; top:390px">5</span><br/>  
+<span id="a6"style=" position:absolute; left:600px; top:390px" >6</span><br/>
+<script type="text/javascript"> 
+var cur = 0;  
+var distance = 0;  
+var time =100;   
+var go;    
+var stop = -1; 
+var index=0;
+var getAward = function() { 
+if(index<1){ 
+ clearInterval(go);   
+go = setInterval("change()", time);
+}
+else{
+	alert("hhi");
+}
+}; 
+ var change = function() {  
+          if(cur==stop) {    
+            showAward(stop);    
+            return;  
+        } 
+		$("#a"+cur).removeClass("cur");  
+        if(cur > 6) {  
+		   cur=cur%6;
+            $("#a"+cur).addClass("cur");   
+        }else {   
+            $("#a"+(cur+1)).addClass("cur");  
+            cur++;    
+        }   
+          
+         
+    };  
+    var stopAward = function(award) {  
+		  var Rand = Math.random();
+		  var p=Math.ceil(Rand*6);
+        stop = p;  
+    };
+	var showAward = function(award) {  
+        alert(award);    
+        clearInterval(go);    
+    }; 
+</script>
+</body>
+</html>
